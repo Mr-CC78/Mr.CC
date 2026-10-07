@@ -1,0 +1,205 @@
+body{
+    /* background简写合并，代码更短 */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex;
+}
+.left-carousel-wrap {
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.carousel-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.carousel-inner {
+    position: relative;
+    display: flex;
+    width: 100%;
+    transition: transform 0.4s ease-in-out;
+    height: 100%;
+}
+.card-item {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.92);
+    border-radius:16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.round-img{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    justify-content: center;
+    min-height: 100vh;
+}
+.revolve{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:none;
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+.right{
+    right: 10px;
+}
+.left{
+    left: 10px;
+}
+
+.revolve:hover{
+    opacity: 0.7;
+}
+
+.revolve-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.revolve-img.right{
+    right: 10px;
+}
+.revolve-img.left{
+    left: 10px;
+}
+.register-box{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 540px;
+    right: 50px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.check-in{
+    background: linear-gradient(45deg, rgb(233, 233, 235), rgb(69, 181, 246));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.all-title{
+    font-size:small;
+    font-weight: 800;
+    color: rgb(72, 71, 71);
+    margin:0 0 15px;
+}
+
+.input-box{
+    height: 550px;
+    width: 300px;
+    padding: 25px;
+    background-color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgb(176, 177, 176); 
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transition: border-radius 0.2s ease;
+    overflow: hidden;
+}
+
+.putin-box{
+    width: 285px;
+    height: 30px;
+    margin-top: 10px;
+    border: 2px solid #fffefe;
+    border-radius: 7px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.25s ease;
+}
+.putin-box:focus{
+    border-color: rgb(255, 255, 255);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+}
+.putin-box.reg{
+    margin-bottom: 16px;
+}
+.input-box:has(.quary img:hover){
+    border-top-right-radius: 0;
+}
+.quary{
+    width:  40px;
+    height: 40px;
+    margin-bottom: 5px;
+    position: absolute;
+    transition: all 0.3s ease;
+    right: 0px;
+    top: 0px;
+}
+.quary img{
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    clip-path: polygon(100% 0,0 0,100% 100%,100% 0);
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+    justify-content: center;
+}
+.quary:hover img{
+    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+}
+.sign{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.sign-button{
+    width: 285px;
+    border-radius: 10px;
+    border: solid rgb(166, 165, 165);
+    height: 32px;
+    cursor: pointer;
+    transition:all 0.25s ease ;
+}
+.sign-button:hover{
+    
+    background-color: #b2b1b1;
+}
+.round-card{
+    height: 100%;
+    width: 500px;
+    background-color: #fffefe;
+}
+.found-box{
+    font-size: x-small;
+    margin-top: 5px;
+    margin-left: 79%;
+    color: #7c7979;
+    text-decoration: underline;
+}
+.found-text {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #7c7979; /* 下划线单独颜色 */
+}
+.found-text:hover {
+  color: #030303;
+  text-decoration-color: #010101;
+}
+.choose-box{
+    width: 100%;
+    text-align: center;
+    color: #706d6d;
+    margin-top: 20px;
+}

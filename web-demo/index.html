@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易登录界面</title>
+    <!-- 引入css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="left-carousel-wrap">
+        <div class="carousel-box">
+            <div class="carousel-inner">
+                <div class="card-item active">
+                    <image class="round-img" src="/v2-c74cf86a68d6e761b72df6c3966013a4_r.jpg" mode="widthFix"></image>
+                </div>
+                <button class="revolve right"onclick="right()"><image class="revolve-img right" src="/切换器右.png" mode="widthFix"></image></button>
+                <button class="revolve left" onclick="left()"><image class="revolve-img left" src="/切换器左.png" mode="widthFix"></image></button>
+            </div>
+        </div>
+</div>
+
+<div class="register-box">
+    <div class="input-box">
+        <div class="check-in">
+            <h1>Welcome , Master</h1>
+        </div>
+            <div class="quary">
+                <img src="/二维码.png">
+            </div>
+            <span class="all-title">账号</span>
+            <input type="text" class="putin-box reg" placeholder="请输入账号">
+
+
+            <span class="all-title">密码</span>
+            <input type="text" class="putin-box pwd" placeholder="请输入密码">
+
+            <div class="found-box">
+                <span class="found-text" onclick="found()">找回密码</span>
+            </div>
+            
+        <div class="choose-box">
+            <span class="choose-text" onclick="choose-sign()">选择其他登录方式 > </span>
+        </div>
+        <div class="sign">
+            <button class="sign-button"><span>登录</span></button>
+        </div>
+    </div>
+</div>
+    <!-- 引入js，放body末尾 -->
+    <script src="script.js"></script>
+</body>
+</html>
