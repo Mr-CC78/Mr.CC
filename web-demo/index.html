@@ -9,46 +9,109 @@
 </head>
 <body>
 
-<div class="left-carousel-wrap">
+<main class="page">
+
+    <!-- ========== 左侧：轮播展示区 ========== -->
+    <section class="left-carousel-wrap" aria-label="轮播展示区">
         <div class="carousel-box">
             <div class="carousel-inner">
-                <div class="card-item active">
-                    <image class="round-img" src="/v2-c74cf86a68d6e761b72df6c3966013a4_r.jpg" mode="widthFix"></image>
-                </div>
-                <button class="revolve right"onclick="right()"><image class="revolve-img right" src="/切换器右.png" mode="widthFix"></image></button>
-                <button class="revolve left" onclick="left()"><image class="revolve-img left" src="/切换器左.png" mode="widthFix"></image></button>
+                <figure class="card-item active">
+                    <img class="round-img" src="/登录界面.jpg" alt="登录页展示图">
+                </figure>
+
+                <button class="revolve left" type="button" onclick="left()" aria-label="上一张">
+                    <img class="revolve-img left" src="/切换器左.png" alt="">
+                </button>
+                <button class="revolve right" type="button" onclick="right()" aria-label="下一张">
+                    <img class="revolve-img right" src="/切换器右.png" alt="">
+                </button>
             </div>
         </div>
-</div>
+    </section>
 
-<div class="register-box">
-    <div class="input-box">
-        <div class="check-in">
-            <h1>Welcome , Master</h1>
-        </div>
+    <!-- ========== 右侧：登录表单区 ========== -->
+    <section class="register-box" aria-label="登录表单区">
+        <form class="input-box" onsubmit="return false;">
             <div class="quary">
-                <img src="/二维码.png">
+                    <img src="/二维码.png" alt="二维码登录">
+                </div>
+            <!-- 头部：标题-->
+            <header class="form-header">
+                <div class="check-in">
+                    <h1>Welcome , Master</h1>
+                </div>
+                
+            </header>
+
+            <!-- 账号 -->
+            <div class="field">
+                <label class="all-title" for="account">账号</label>
+                <div class="input-wrap">
+                    <input id="account" type="text" class="putin-box reg" placeholder="请输入账号" autocomplete="username">
+                    <button class="clear-btn" type="button" aria-label="清空账号">
+                        <svg viewBox="0 0 10 10" width="8" height="8" aria-hidden="true">
+                            <line x1="2" y1="2" x2="8" y2="8"></line>
+                            <line x1="8" y1="2" x2="2" y2="8"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <span class="all-title">账号</span>
-            <input type="text" class="putin-box reg" placeholder="请输入账号">
 
+            <!-- 密码 -->
+            <div class="field">
+                <label class="all-title" for="password">密码</label>
+                <div class="input-wrap">
+                    <input id="password" type="password" class="putin-box pwd" placeholder="请输入密码" autocomplete="current-password">
+                    <button class="clear-btn" type="button" aria-label="清空密码">
+                        <svg viewBox="0 0 10 10" width="8" height="8" aria-hidden="true">
+                            <line x1="2" y1="2" x2="8" y2="8"></line>
+                            <line x1="8" y1="2" x2="2" y2="8"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-            <span class="all-title">密码</span>
-            <input type="text" class="putin-box pwd" placeholder="请输入密码">
-
+            <!-- 找回密码 -->
             <div class="found-box">
-                <span class="found-text" onclick="found()">找回密码</span>
+                <button class="found-text" type="button" onclick="found()">找回密码</button>
             </div>
-            
-        <div class="choose-box">
-            <span class="choose-text" onclick="choose-sign()">选择其他登录方式 > </span>
-        </div>
-        <div class="sign">
-            <button class="sign-button"><span>登录</span></button>
-        </div>
-    </div>
-</div>
-    <!-- 引入js，放body末尾 -->
-    <script src="script.js"></script>
+
+            <!-- 其他登录方式 -->
+            <div class="choose-box" id="chooseBox">
+                <button class="choose-text" type="button" onclick="chooseSign()" aria-expanded="false" aria-controls="otherLogin">
+                    选择其他登录方式 <span class="arrow">&gt;</span>
+                </button>
+
+                <!-- 展开面板：三个登录方式圆圈（换成你自己的图片即可） -->
+                <div class="other-login" id="otherLogin">
+                    <div class="other-login-inner">
+                        <button class="circle-btn" type="button" data-way="微信" onclick="pickWay(this)" title="微信登录">
+                            <img src="./微信.png" alt="微信登录">
+                        </button>
+                        <button class="circle-btn" type="button" data-way="QQ" onclick="pickWay(this)" title="QQ登录">
+                            <img src="./qq.png" alt="QQ登录">
+                        </button>
+                        <button class="circle-btn" type="button" data-way="邮箱" onclick="pickWay(this)" title="邮箱登录">
+                            <img src="./抖音.png" alt="抖音登录">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 登录按钮 -->
+            <div class="sign">
+                <button class="sign-button" type="submit"><span>登录</span></button>
+            </div>
+            <!-- 协议勾选区 -->
+            <div class="policy-box">
+                <span class="policy-text">已阅读并同意以下协议平台服务协议、隐私权政策、法律声明、客户端服务协议</span>              
+            </div>
+        </form>
+    </section>
+
+</main>
+
+<!-- 引入js，放body末尾 -->
+<script src="script.js"></script>
 </body>
 </html>

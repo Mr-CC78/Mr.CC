@@ -1,10 +1,24 @@
-body{
+/* ==========================================================
+   基础重置
+   ========================================================== */
+body {
     /* background简写合并，代码更短 */
     margin: 0;
     min-height: 100vh;
+}
+
+/* 页面主容器：左右两栏 */
+.page {
     display: flex;
     justify-content: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: 100vh;
 }
+
+/* ==========================================================
+   左侧：轮播展示区
+   ========================================================== */
 .left-carousel-wrap {
     width: 70%;
     height: 100vh;
@@ -14,6 +28,7 @@ body{
     justify-content: center;
     position: relative;
 }
+
 .carousel-box {
     position: relative;
     width: 100%;
@@ -21,6 +36,7 @@ body{
     overflow: hidden;
     border-radius: 5px;
 }
+
 .carousel-inner {
     position: relative;
     display: flex;
@@ -28,58 +44,76 @@ body{
     transition: transform 0.4s ease-in-out;
     height: 100%;
 }
+
 .card-item {
     position: relative;
     flex-shrink: 0;
     width: 100%;
     height: 100%;
+    margin: 0;                 /* figure 默认外边距清零 */
     background: rgba(255,255,255,0.92);
-    border-radius:16px;
+    border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
 }
-.round-img{
+
+.round-img {
     width: 100%;
     display: flex;
     align-items: center;
     margin: 0;
     justify-content: center;
     min-height: 100vh;
+    object-fit: cover;
 }
-.revolve{
+
+/* 左右切换按钮 */
+.revolve {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border:none;
+    border: none;
+    padding: 0;
     overflow: hidden;
     opacity: 0;
+    cursor: pointer;
     transition: 0.3s;
+    z-index: 2;                /* 保证按钮压在图片之上 */
 }
-.right{
+
+.right {
     right: 10px;
 }
-.left{
+
+.left {
     left: 10px;
 }
 
-.revolve:hover{
+.revolve:hover {
     opacity: 0.7;
 }
 
-.revolve-img{
+.revolve-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.revolve-img.right{
+
+.revolve-img.right {
     right: 10px;
 }
-.revolve-img.left{
+
+.revolve-img.left {
     left: 10px;
 }
-.register-box{
+
+/* ==========================================================
+   右侧：登录表单区
+   ========================================================== */
+.register-box {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -89,55 +123,125 @@ body{
     justify-content: center;
     min-height: 100vh;
 }
-.check-in{
-    background: linear-gradient(45deg, rgb(233, 233, 235), rgb(69, 181, 246));
-    -webkit-background-clip: text;
-    color: transparent;
-}
 
-.all-title{
-    font-size:small;
-    font-weight: 800;
-    color: rgb(72, 71, 71);
-    margin:0 0 15px;
-}
-
-.input-box{
-    height: 550px;
+.input-box {
+    position: relative;        /* 作为 .quary 角标的定位基准 */
+    min-height: 550px;         /* 改 min-height：面板展开时容器跟着长高，不会被 overflow 裁掉 */
+    height: auto;
     width: 300px;
     padding: 25px;
     background-color: rgba(255,255,255,0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 2px solid rgb(176, 177, 176); 
+    border: 2px solid rgb(176, 177, 176);
     border-radius: 30px 30px 30px 30px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     transition: border-radius 0.2s ease;
     overflow: hidden;
 }
 
-.putin-box{
+/* 表单头部 */
+.form-header {
+    position: relative;
+    z-index: 1;
+}
+
+.check-in {
+    background: linear-gradient(45deg, rgb(65, 65, 66), rgb(83, 223, 52));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* 表单字段分组 */
+.field {
+    position: relative;
+    z-index: 1;
+}
+
+.all-title {
+    display: block;            /* label 独占一行，保证与输入框上下对齐 */
+    font-size: 13.4px;
+    font-weight: 800;
+    color: rgb(72, 71, 71);
+    margin: 0 0 15px;
+}
+
+.input-wrap {
+    position: relative;
+    display: block;
+}
+
+.putin-box {
+    padding-left: 6px;
+    display: flex;
     width: 285px;
     height: 30px;
-    margin-top: 10px;
-    border: 2px solid #fffefe;
+    padding-right: 28px;       /* 右侧留出清除按钮的位置，文字不会被压住 */
+    border: 2px solid #aeacac;
     border-radius: 7px;
     box-sizing: border-box;
     outline: none;
     transition: all 0.25s ease;
 }
-.putin-box:focus{
-    border-color: rgb(255, 255, 255);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+
+/* 清除按钮：默认缩着隐藏，有输入内容时弹出来 */
+.clear-btn {
+    position: absolute;
+    right: 20px;
+    width: 18px;
+    top: 15px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(36, 35, 35, 0.303);
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;                        /* 隐藏时不可点 */
+    transform: translateY(-50%) scale(0.5);
+    transition:
+        opacity 0.2s ease,
+        transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background-color 0.2s ease;
 }
-.putin-box.reg{
+
+.clear-btn svg line {
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+/* 有内容 → 弹出 */
+.input-wrap.has-text .clear-btn {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) scale(1);
+}
+
+.clear-btn:hover {
+    background: rgba(0, 0, 0, 0.42);
+}
+
+.putin-box:focus {
+    border-color: rgb(255, 255, 255);
+    box-shadow: 0 0 0 3px rgba(2, 2, 2, 0.522);
+}
+
+.putin-box.reg {
     margin-bottom: 16px;
 }
-.input-box:has(.quary img:hover){
+
+/* 右上角二维码角标 */
+.input-box:has(.quary img:hover) {
     border-top-right-radius: 0;
 }
-.quary{
-    width:  40px;
+
+.quary {
+    width: 40px;
     height: 40px;
     margin-bottom: 5px;
     position: absolute;
@@ -145,7 +249,8 @@ body{
     right: 0px;
     top: 0px;
 }
-.quary img{
+
+.quary img {
     transition: all 0.3s ease;
     width: 100%;
     display: flex;
@@ -155,51 +260,212 @@ body{
     cursor: pointer;
     justify-content: center;
 }
-.quary:hover img{
+
+.quary:hover img {
     clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
 }
-.sign{
+
+/* ==========================================================
+   底部操作区
+   ========================================================== */
+.found-box {
+    display: flex;             /* 用 flex 右对齐，替代原来的 margin-left:79% */
+    justify-content: flex-end;
+    font-size: x-small;
+    margin-top: 5px;
+    text-decoration: underline;
+}
+
+.found-text {
+    /* button 标签重置，保持与原来 span 一致的观感 */
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color:#908e8e;
+    text-decoration: underline;
+    text-decoration-color:white; /* 下划线单独颜色 */
+}
+
+.found-text:hover {
+    color: #0e0d0d;
+    text-decoration-color: #010101;
+}
+
+/* ==========================================================
+   其他登录方式：点击丝滑展开三个圆圈
+   ========================================================== */
+.choose-box {
+    width: 100%;
+    text-align: center;
+    color: #706d6d;
+    margin-top: 20px;
+}
+
+/* 触发按钮 */
+.choose-text {
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.choose-text:hover {
+    color: #030303;
+}
+
+/* 箭头：展开时旋转 90° */
+.arrow {
+    display: inline-block;
+    margin-left: 2px;
+    transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.choose-box.is-open .arrow {
+    transform: rotate(90deg);
+}
+
+/* 展开面板：grid 0fr → 1fr 实现高度丝滑过渡 */
+.other-login {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+        grid-template-rows 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.3s ease;
+}
+
+.choose-box.is-open .other-login {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.other-login-inner {
+    min-height: 0;             /* grid 0fr 生效的关键 */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;                 /* 三个圆圈横向排列 */
+    padding-top: 0;            /* 收起时不能有 padding，否则残留 16px 空白 */
+    transition: padding-top 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.choose-box.is-open .other-login-inner {
+    padding-top: 16px;         /* 只在展开时才有上间距 */
+}
+
+/* 圆圈：收起时缩在上方，展开后依次弹入 */
+.circle-btn {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.9);
+    color: #706d6d;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.7);
+    will-change: transform, opacity;   /* 提前提升为合成层，动画更顺滑 */
+    transition:
+        opacity 0.3s ease,
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+/* 图片加载失败时：圆圈内显示文字占位（便于排查路径，也不会是空白圆圈） */
+.circle-btn .fallback {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* 圆圈内的图片（三种登录方式图标） */
+.circle-btn img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;       /* 图片不变形，完整显示 */
+    display: block;
+    pointer-events: none;      /* 点击穿透到按钮，避免误触图片拖拽 */
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+}
+
+.choose-box.is-open .circle-btn {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 依次弹入（错峰） */
+.choose-box.is-open .circle-btn:nth-child(1) { transition-delay: 0.08s; }
+.choose-box.is-open .circle-btn:nth-child(2) { transition-delay: 0.16s; }
+.choose-box.is-open .circle-btn:nth-child(3) { transition-delay: 0.24s; }
+
+/* 悬停：上浮 + 底色变灰 + 图标微微放大 */
+.circle-btn:hover {
+    background-color: #b2b1b1;
+    border-color: #b2b1b1;
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.12);
+}
+
+.circle-btn:hover img {
+    transform: scale(1.12);    /* 图标跟着放大一点，反馈更明显 */
+}
+
+/* 图片加载失败时不显示破图图标 */
+.circle-btn img[hidden] {
+    display: none;
+}
+
+/* 登录按钮 */
+.sign {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-.sign-button{
+.sign-button {
     width: 285px;
     border-radius: 10px;
     border: solid rgb(166, 165, 165);
     height: 32px;
     cursor: pointer;
-    transition:all 0.25s ease ;
+    transition: all 0.25s ease;
 }
-.sign-button:hover{
-    
+
+.sign-button:hover {
     background-color: #b2b1b1;
 }
-.round-card{
+.policy-box{
+    position: relative;
+    bottom: 10px;
+    text-align: center;
+    align-items: center;
+}
+.policy-text{
+    font-size: 12px;
+    
+}
+/* ==========================================================
+   预留样式
+   ========================================================== */
+.round-card {
     height: 100%;
     width: 500px;
     background-color: #fffefe;
-}
-.found-box{
-    font-size: x-small;
-    margin-top: 5px;
-    margin-left: 79%;
-    color: #7c7979;
-    text-decoration: underline;
-}
-.found-text {
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: #7c7979; /* 下划线单独颜色 */
-}
-.found-text:hover {
-  color: #030303;
-  text-decoration-color: #010101;
-}
-.choose-box{
-    width: 100%;
-    text-align: center;
-    color: #706d6d;
-    margin-top: 20px;
 }
