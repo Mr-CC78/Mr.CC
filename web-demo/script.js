@@ -107,24 +107,20 @@ document.querySelectorAll('.input-wrap').forEach(function (wrap) {
 
 /* ---------- 协议勾选 + 登录校验 ---------- */
 document.getElementById('loginBtn').addEventListener('click', function () {
-    const box = document.getElementById('agreeBox');
-    const policy = document.getElementById('policy');
-    const account = document.getElementById('account');
-    const pwd = document.getElementById('password');
+    var agree = document.querySelector('.agree-btn');
+    var policy = document.getElementById('policy');
+    var account = document.getElementById('account');
+    var pwd = document.getElementById('password');
 
-    // 先查账号密码
     if (!account.value.trim()) { toast('请输入账号'); account.focus(); return; }
-    if (!pwd.value)            { toast('请输入密码'); pwd.focus(); return; }
-
-    // 再查协议
-    if (!box.checked) {
+    if (!pwd.value) { toast('请输入密码'); pwd.focus(); return; }
+    if (!agree.checked) {
         toast('请先阅读并同意以下协议');
         policy.classList.remove('shake');
-        void policy.offsetWidth;              // 强制重排，让动画能重复触发
+        void policy.offsetWidth;
         policy.classList.add('shake');
         return;
     }
-
     toast('登录成功，欢迎回来！');
 });
 

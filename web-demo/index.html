@@ -16,14 +16,14 @@
         <div class="carousel-box">
             <div class="carousel-inner">
                 <figure class="card-item active">
-                    <img class="round-img" src="/登录界面.jpg" alt="登录页展示图">
+                    <img class="round-img" src="./img/登录界面.jpg" alt="登录页展示图">
                 </figure>
 
                 <button class="revolve left" type="button" onclick="left()" aria-label="上一张">
-                    <img class="revolve-img left" src="/切换器左.png" alt="">
+                    <img class="revolve-img left" src="./img/切换器左.png" alt="">
                 </button>
                 <button class="revolve right" type="button" onclick="right()" aria-label="下一张">
-                    <img class="revolve-img right" src="/切换器右.png" alt="">
+                    <img class="revolve-img right" src="./img/切换器右.png" alt="">
                 </button>
             </div>
         </div>
@@ -33,7 +33,7 @@
     <section class="register-box" aria-label="登录表单区">
         <form class="input-box" onsubmit="return false;">
             <div class="quary">
-                    <img src="/二维码.png" alt="二维码登录">
+                    <img src="./img/二维码.png" alt="二维码登录">
                 </div>
             <!-- 头部：标题-->
             <header class="form-header">
@@ -86,13 +86,13 @@
                 <div class="other-login" id="otherLogin">
                     <div class="other-login-inner">
                         <button class="circle-btn" type="button" data-way="微信" onclick="pickWay(this)" title="微信登录">
-                            <img src="./微信.png" alt="微信登录">
+                            <img src="./img/微信.png" alt="微信登录">
                         </button>
                         <button class="circle-btn" type="button" data-way="QQ" onclick="pickWay(this)" title="QQ登录">
-                            <img src="./qq.png" alt="QQ登录">
+                            <img src="./img/qq.png" alt="QQ登录">
                         </button>
-                        <button class="circle-btn" type="button" data-way="邮箱" onclick="pickWay(this)" title="邮箱登录">
-                            <img src="./抖音.png" alt="抖音登录">
+                        <button class="circle-btn" type="button" data-way="抖音" onclick="pickWay(this)" title="抖音登录">
+                            <img src="./img/抖音.png" alt="抖音登录">
                         </button>
                     </div>
                 </div>
@@ -103,9 +103,21 @@
                 <button class="sign-button" type="submit"><span>登录</span></button>
             </div>
             <!-- 协议勾选区 -->
-            <div class="policy-box">
-                <span class="policy-text">已阅读并同意以下协议平台服务协议、隐私权政策、法律声明、客户端服务协议</span>              
-            </div>
+             <div class="policy" id="policy">
+                <label class="policy-box">
+                    <input type="checkbox" class="agree-btn">
+                    <span class="cb-visual">✓
+                        
+                    </span>
+                    <span class="policy-text">
+                        已阅读并同意以下协议
+                        <span style="color: rgb(115, 189, 94);">平台服务协议</span>、
+                        <span style="color: rgb(115, 189, 94);">隐私权政策</span>、
+                        <span style="color: rgb(115, 189, 94);">法律声明</span>、
+                        <span style="color: rgb(115, 189, 94);">客户端服务协议</span>
+                    </span>              
+                </label>
+             </div>
         </form>
     </section>
 
