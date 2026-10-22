@@ -11,29 +11,76 @@
 
 <main class="page">
 
-    <!-- ========== 左侧：轮播展示区 ========== -->
+    <!-- ========== 背景：轮播展示区 ========== -->
     <section class="left-carousel-wrap" aria-label="轮播展示区">
         <div class="carousel-box">
-            <div class="carousel-inner">
-                <figure class="card-item active">
-                    <img class="round-img" src="./img/登录界面.jpg" alt="登录页展示图">
+            <!-- 只放图片，切换按钮和指示器移到了外面（否则会被当成 flex item 挤位） -->
+            <div class="carousel-inner" id="carouselInner">
+
+                <figure class="card-item active"
+                        data-theme="#FF5A1F"
+                        data-theme-deep="#D6430A"
+                        data-caption="落日山巅">
+                        <img class="round-img" src="../source/夕阳.png" alt="落日山巅">
                 </figure>
 
-                <button class="revolve left" type="button" onclick="left()" aria-label="上一张">
-                    <img class="revolve-img left" src="./img/切换器左.png" alt="">
-                </button>
-                <button class="revolve right" type="button" onclick="right()" aria-label="下一张">
-                    <img class="revolve-img right" src="./img/切换器右.png" alt="">
-                </button>
+                <figure class="card-item"
+                        data-theme="#0099FF"
+                        data-theme-deep="#0072CC"
+                        data-caption="雪域清流">
+                        <img class="round-img" src="../source/雪山.jpg" alt="雪域清流">
+                </figure>
+
+                <figure class="card-item"
+                        data-theme="#00A6B8"
+                        data-theme-deep="#00788A"
+                        data-caption="碧波微澜">
+                        <img class="round-img" src="../source/海洋.png" alt="碧波微澜">
+                </figure>
+
+                <figure class="card-item"
+                        data-theme="#22A83A"
+                        data-theme-deep="#16803A"
+                        data-caption="翠谷云深">
+                        <img class="round-img" src="../source/森林.jpg" alt="翠谷云深">
+                </figure>
+            
             </div>
+
+            <!-- 左右切换按钮 -->
+            <button class="revolve left" type="button" onclick="left()" aria-label="上一张">
+                <img class="revolve-img left" src="../img/切换器左.png" alt="">
+            </button>
+            <button class="revolve right" type="button" onclick="right()" aria-label="下一张">
+                <img class="revolve-img right" src="../img/切换器右.png" alt="">
+            </button>
         </div>
     </section>
 
     <!-- ========== 右侧：登录表单区 ========== -->
     <section class="register-box" aria-label="登录表单区">
+        <div class= "login-stage" id= "loginStage">
+            <aside class="qr-panel" id="qrPanel" aria-label="扫码登录">
+            <div class="qr-panel-inner">
+                <div class="qr-title">扫码登录</div>
+
+                <div class="qr-card">
+                    <img src="../img/二维码.png" alt="登录二维码">
+                    <i class="qr-corner tl"></i>
+                    <i class="qr-corner tr"></i>
+                    <i class="qr-corner bl"></i>
+                    <i class="qr-corner br"></i>
+                </div>
+
+                <p class="qr-tip">请使用<span style="color: var(--theme);"> App </span>扫描二维码登录</p>
+                <button class="qr-refresh" type="button" onclick="refreshQR(event)">刷新二维码</button>
+                <button class="qr-close" type="button" onclick="toggleQR()">返回账号登录</button>
+            </div>
+        </aside>
+
         <form class="input-box" onsubmit="return false;">
-            <div class="quary">
-                    <img src="./img/二维码.png" alt="二维码登录">
+                <div id="qrcodeBtn" class="quary" role="button" aria-label="二维码登录" onclick="toggleQR()" tabindex="0" aria-expanded="false" aria-controls="qrPanel" alt="二维码登录">
+                    <img src="../img/二维码.png" alt="二维码登录">
                 </div>
             <!-- 头部：标题-->
             <header class="form-header">
@@ -86,13 +133,13 @@
                 <div class="other-login" id="otherLogin">
                     <div class="other-login-inner">
                         <button class="circle-btn" type="button" data-way="微信" onclick="pickWay(this)" title="微信登录">
-                            <img src="./img/微信.png" alt="微信登录">
+                            <img src="../img/微信.png" alt="微信登录">
                         </button>
                         <button class="circle-btn" type="button" data-way="QQ" onclick="pickWay(this)" title="QQ登录">
-                            <img src="./img/qq.png" alt="QQ登录">
+                            <img src="../img/qq.png" alt="QQ登录">
                         </button>
                         <button class="circle-btn" type="button" data-way="抖音" onclick="pickWay(this)" title="抖音登录">
-                            <img src="./img/抖音.png" alt="抖音登录">
+                            <img src="../img/抖音.png" alt="抖音登录">
                         </button>
                     </div>
                 </div>
@@ -100,7 +147,7 @@
 
             <!-- 登录按钮 -->
             <div class="sign">
-                <button class="sign-button" type="submit"><span>登录</span></button>
+                <button class="sign-button" type="submit" onclick="window.location.href='../iphone17/index.html'"><span>登录</span></button>
             </div>
             <!-- 协议勾选区 -->
              <div class="policy" id="policy">
@@ -111,14 +158,15 @@
                     </span>
                     <span class="policy-text">
                         已阅读并同意以下协议
-                        <span style="color: rgb(115, 189, 94);">平台服务协议</span>、
-                        <span style="color: rgb(115, 189, 94);">隐私权政策</span>、
-                        <span style="color: rgb(115, 189, 94);">法律声明</span>、
-                        <span style="color: rgb(115, 189, 94);">客户端服务协议</span>
+                        <span class="policy-entry" style="color: black;  text-decoration: underline black; ">平台服务协议</span>、
+                        <span class="policy-entry" style="color: black;  text-decoration: underline black; ">隐私权政策</span>、
+                        <span class="policy-entry" style="color: black;  text-decoration: underline black; ">法律声明</span>、
+                        <span class="policy-entry" style="color: black;  text-decoration: underline black; ">客户端服务协议</span>
                     </span>              
                 </label>
              </div>
         </form>
+    </div>
     </section>
 
 </main>

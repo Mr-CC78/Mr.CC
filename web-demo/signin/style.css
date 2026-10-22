@@ -1,12 +1,29 @@
 /* ==========================================================
    基础重置
    ========================================================== */
+
+@property --theme {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #73bd5e;
+}
+@property --theme-deep {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #57a044;
+}
+:root {
+    --theme: #73bd5e;
+    --theme-deep: #57a044;
+    /* 自定义属性自身也要有过渡，颜色才能"渐变"而不是"跳变" */
+    transition: --theme 0.6s ease, --theme-deep 0.6s ease;
+}
 body {
     /* background简写合并，代码更短 */
     margin: 0;
     min-height: 100vh;
+    overflow: hidden;  
 }
-
 /* 页面主容器：左右两栏 */
 .page {
     display: flex;
@@ -17,7 +34,7 @@ body {
 }
 
 /* ==========================================================
-   左侧：轮播展示区
+   背景：轮播展示区
    ========================================================== */
 .left-carousel-wrap {
     width: 100%;
@@ -40,29 +57,30 @@ body {
     position: relative;
     display: flex;
     width: 100%;
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2,1);
     height: 100%;
 }
-
 .card-item {
     position: relative;
     flex-shrink: 0;
     width: 100%;
     height: 100%;
-    margin: 0;                 /* figure 默认外边距清零 */
-    background: rgba(255,255,255,0.92);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin: 0;
     overflow: hidden;
+}
+.card-item::after{
+    position: absolute;
+    content: '';
+    inset: 0;
+    pointer-events: none;
 }
 
 .round-img {
     width: 100%;
-    display: flex;
-    align-items: center;
+    height: 100vh;
+    object-fit: cober;
+    display: block;
     margin: 0;
-    justify-content: center;
-    min-height: 100vh;
-    object-fit: cover;
 }
 
 /* 左右切换按钮 */
@@ -70,30 +88,35 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: none;
     padding: 0;
     overflow: hidden;
-    opacity: 0;
+    opacity: 0.28;
     cursor: pointer;
-    transition: 0.3s;
-    z-index: 2;                /* 保证按钮压在图片之上 */
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    z-index: 3;
 }
-
+.carousel-box:hover .revolve{
+    opacity: 0.9;
+}
+.revolve:hover{
+    opacity: 1 !important;
+    background: var(--theme);
+    transform: translateY(-50%) scale(1.08);
+}
 .right {
-    right: 10px;
+    right: 24px;
 }
 
 .left {
-    left: 10px;
+    left: 24px;
 }
-
-.revolve:hover {
-    opacity: 0.7;
-}
-
 .revolve-img {
     width: 100%;
     height: 100%;
@@ -107,9 +130,8 @@ body {
 .revolve-img.left {
     left: 10px;
 }
-
 /* ==========================================================
-   右侧：登录表单区
+   中间：登录表单区
    ========================================================== */
 .register-box {
     position: absolute;
@@ -117,7 +139,8 @@ body {
     flex-direction: column;
     height: 100%;
     width: 540px;
-    right: 480px;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: center;
     justify-content: center;
     min-height: 100vh;
@@ -146,9 +169,13 @@ body {
 }
 
 .check-in {
-    background: linear-gradient(45deg, rgb(65, 65, 66), rgb(83, 223, 52));
+    background: linear-gradient(45deg, rgb(96, 96, 96), var(--theme));
     -webkit-background-clip: text;
     color: transparent;
+    background-clip: text;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* 表单字段分组 */
@@ -403,7 +430,7 @@ body {
     height: 60%;
     object-fit: contain;       /* 图片不变形，完整显示 */
     display: block;
-    pointer-events: none;      /* 点击穿透到按钮，避免误触图片拖拽 */
+    pointer-events: none;    
     border-radius: 50%;
     transition: transform 0.25s ease;
 }
@@ -479,6 +506,9 @@ body {
     font-size: 12px;
     color: #908e8e;
 }
+.policy-entry{
+    text-decoration: #010101;
+}
 .agree-btn {
     position: absolute;
     opacity: 0;
@@ -504,8 +534,8 @@ body {
 }
 
 .agree-btn:checked +.cb-visual {
-    background: rgb(115, 189, 94);
-    border-color: rgb(115, 189, 94);
+    background: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
 }
 .agree-btn:focus-visible + .cb-visual {
     box-shadow: 0 0 0 3px rgba(115, 189, 94, 0.35);
@@ -517,4 +547,147 @@ body {
     height: 100%;
     width: 500px;
     background-color: #fffefe;
+}
+/* ==========================================================
+   二维码登录：点击右上角角标，左侧丝滑展开扫码面板
+   ========================================================== */
+.login-stage {
+    position: relative;                 /* 面板的定位基准 */
+    display: flex;
+    justify-content: center;
+}
+
+/* 面板：绝对定位贴在 .input-box 左边缘外侧，宽度 0 → 330px */
+.qr-panel {
+    position: absolute;
+    right: 100%;                        /* 右边缘对齐表单左边缘 */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 18px;                 /* 与表单的间隙 */
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;               /* 收起时不可点 */
+    transition:
+        width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease;
+}
+
+.login-stage.is-open .qr-panel {
+    width: 330px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 内层必须写死宽度：否则展开过程中内容会被横向压扁 */
+.qr-panel-inner {
+    width: 330px;
+    box-sizing: border-box;
+    padding: 26px 24px 20px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+    text-align: center;
+
+    /* 内容延迟淡入：面板先撑开，内容再滑入，形成层次 */
+    opacity: 0;
+    transform: translateX(-20px) scale(0.96);
+    transition:
+        opacity 0.4s ease 0.12s,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
+}
+
+.login-stage.is-open .qr-panel-inner {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.qr-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1d1d1d;
+    margin-bottom: 18px;
+}
+
+.qr-card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 16px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.qr-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* 二维码四个角的主题色装饰 */
+.qr-corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--theme);
+}
+.qr-corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+.qr-corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+.qr-corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+.qr-corner.br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+
+.qr-tip {
+    font-size: 13px;
+    color: #908e8e;
+    margin: 0 0 14px;
+}
+
+.qr-refresh,
+.qr-close {
+    font: inherit;
+    font-size: 13px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #706d6d;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.qr-refresh:hover {
+    color: var(--theme-deep);
+    background: rgba(115, 189, 94, 0.12);
+}
+
+.qr-close {
+    display: block;
+    margin: 4px auto 0;
+    color: #908e8e;
+    text-decoration: underline;
+}
+
+.qr-close:hover {
+    color: #030303;
+}
+
+/* 角标激活态：展开时保持"完整方形"并微微放大 */
+.quary.is-active img {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.06);
+}
+
+/* 窄屏适配 */
+@media (max-width: 1100px) {
+    .login-stage.is-open .qr-panel { width: 260px; }
+    .qr-panel-inner { width: 260px; padding: 20px 16px; }
+    .qr-card { width: 150px; height: 150px; }
 }
